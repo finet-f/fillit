@@ -6,7 +6,7 @@
 /*   By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/08 18:29:59 by flfinet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/15 14:10:33 by flfinet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/05 11:03:47 by flfinet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,15 +21,13 @@ typedef struct s_tetri
   int width;
   int height;
   char **tetris;
-  char **comp;
-  int *start;
+  struct s_tetri *next;
+  struct s_tetri *prev;
+  struct s_tetri *start;
+  struct s_tetri *end;
+  size_t size;
 } t_tetri;
 
-int check_recur(char *dest);
-int check_backn(char *dest);
-int check_pcs(char *dest);
-int check_char(char *dest);
-int check_nb_line(char *dest);
 void initialisation(t_tetri *liste);
 int insert_list(t_tetri *liste, char **tetris, char **dest_tetris);
 int insert_elem_end_liste (t_tetri *liste, char **tetris, char **dest_tetris);

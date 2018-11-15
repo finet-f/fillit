@@ -6,7 +6,7 @@
 #    By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/24 10:47:34 by flfinet      #+#   ##    ##    #+#        #
-#    Updated: 2018/10/31 10:24:47 by flfinet     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/31 14:03:40 by flfinet     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -15,7 +15,8 @@ NAME = fillit
 
 CFLAGS = -Wall -Wextra -Werror -Iincludes/
 
-SRC	= srcs/main.c
+SRC	= srcs/main.c \
+	  srcs/fill_list.c
 
 OBJS = $(SRC:.c=.o)
 
