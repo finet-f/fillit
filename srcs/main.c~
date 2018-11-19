@@ -6,7 +6,7 @@
 /*   By: lnieto <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/31 14:26:11 by lnieto       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 11:07:37 by flfinet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 10:58:52 by flfinet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include "stdio.h"
 
-void error(void)
+void error()
 {
   ft_putstr_error("Error");
   return ;

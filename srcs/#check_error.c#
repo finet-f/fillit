@@ -6,7 +6,7 @@
 /*   By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/19 12:08:20 by flfinet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 11:24:11 by flfinet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 11:06:42 by flfinet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -105,11 +105,11 @@ char				*read_file(const int fd)
 	char			*file;
 	int				rt;
 
-	if (!(buf = ft_strnew(1000 + 1)))
+	if (!(buf = ft_strnew(4 + 1)))
 		return (NULL);
 	if (!(file = ft_strnew(546)))
 		return (NULL);
-	while ((rt = read(fd, buf, 1000)) > 0)
+	while ((rt = read(fd, buf, 4)) > 0)
 	{
 		buf[rt] = '\0';
 		if (!(tmp = ft_strjoin(file, buf)))
@@ -121,18 +121,16 @@ char				*read_file(const int fd)
 	return (file);
 }
 
-int					main(int argc, char **argv)
+/*int					main(int argc, char **argv)
 {
 	int				fd;
 	int				i;
 	char			*dest;
-	s_tetri	tetris;
+	struct s_tetri	tetris;
 
 	i = 0;
 	if (argc == 0)
 	  return (0);
-	dest = NULL;
-	dest = malloc (sizeof(char) * 1001);
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return (-1);
 	dest = read_file(fd);
@@ -148,3 +146,4 @@ int					main(int argc, char **argv)
 	printf("Nombre de ligne par pieces = %d.\n", check_nb_line(dest));
 	return (0);
 }
+*/

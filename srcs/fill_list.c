@@ -1,134 +1,90 @@
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/08 18:29:59 by flfinet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/05 11:16:33 by flfinet     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
 #include "fillit.h"
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-void initialisation(t_tetri *liste)
+int main(int ac, char **av)
 {
-  liste->start = NULL;
-  liste->end = NULL;
-  liste->size = 0;
-}
-
-char **ft_strcpy_2(char **dst, char **src)
-{
+  t_tetri *list;
+  char **tetriss;
+  //int width = 3;
+  //int height = 2;
+  size_t nbr_pcs;
+  char **dest_tetris;
+  char *piece;
+  char **line;
   int i;
-  int j;
+  int p;
+  int fd;
 
-  j = 0;
-  i = 0;
-  while (src[i])
-    {
-      while(src[i][j])
-	{
-	  dst[i][j] = src[i][j];
-	  j++;
-	}
-      dst[i][j] = '\0';
-      i++;
-      j = 0;
-    }
-  dst[i] = NULL;
-  return (dst);
-}
-
-int insert_list(t_tetri *liste, char **tetriss, char **dest_tetris)
-{
-  t_tetri *new_elem;
-
-  if ((new_elem = malloc(sizeof(new_elem) * 10)) == NULL)
-    return (-1);
-  ft_strcpy_2(dest_tetris, tetriss);
-  //new_elem->width = width;
-  //new_elem->height = height;
-  new_elem->tetris = dest_tetris;
-  new_elem->prev = liste->start;
-  new_elem->next = liste->end;
-  liste->start = new_elem;
-  liste->end = new_elem;
-  liste->size++;
-  return (0);
-}
-
-int insert_elem_end_liste (t_tetri *liste, char **tetriss, char **dest_tetris)
-{
-  t_tetri *new_elem;
-  if ((new_elem = malloc(sizeof(new_elem) * 1)) == NULL)
-    return (-1);
+  list = NULL;
+  nbr_pcs = 10;
   tetriss = NULL;
-  ft_strcpy_2(dest_tetris, tetriss);
-  //  new_elem->width = width;
-  //new_elem->height = height;
-  new_elem->tetris = dest_tetris;
-  new_elem->next = NULL;
-  new_elem->prev = liste->end;
-  liste->end->next = new_elem;
-  liste->end = new_elem;
-  liste->size++;
-  return (0);
-}
-
-int supp(t_tetri *liste)
-{
-  t_tetri *del_elem;
-
-  if(liste->size == 0)
-    return (-1);
-  del_elem = liste->start;
-    liste->start = liste->start->next;
-  if(liste->start == NULL)
-    liste->end = NULL;
-  else
-    liste->start->prev = NULL;
-  free(del_elem->tetris);
-  del_elem->width = 0;
-  del_elem->height = 0;
-  free(del_elem);
-  liste->size--;
-  return (0);
-}
-
-void del_list(t_tetri *liste)
-{
-    while (liste->size > 0)
-        supp(liste);
-}
-
-void ft_putstr2(char **str)
-{
-  int i;
-
-  i = 0;
-  while(str)
+  
+  list = malloc(sizeof(list) * nbr_pcs);
+  if (ac != 2)
     {
-      ft_putstr(str[i]);
-      ft_putchar('\n');
+      ft_putstr("Usage : ./fillit [arg1]\n        only one argument after bin.\n");
+      return (-1);
+    }
+  fd = open(av[1], O_RDONLY);
+  i = 0;
+  line = malloc(sizeof(char*) * 10);
+  while(i < 10)
+  {
+    line[i++] = malloc(sizeof(char) * 100);
+  }
+  i = 0;
+  while (get_next_line(fd, &piece))
+    {
+      line[i] = piece;
       i++;
     }
-}
-
-void affiche(t_tetri *liste)
-{
-  int i;
-  t_tetri *courant;
-  courant = liste->start;
   i = 0;
-  while(courant != NULL)
-    {
-      ft_putstr("\n");
-      ft_putstr2(courant->tetris);
-      courant = courant->next;
-      i++;
+  tetriss = malloc(sizeof(char*) * 3);
+  while(i < 2)
+  {
+    tetriss[i] = malloc(sizeof(char) * 3);
+    i++;
   }
+  tetriss[i] = NULL;
+  i = 0;
+  p = 0;
+  while (i < 2)
+  {
+    while (p < 3)
+    {
+      tetriss[i][p] = '.';
+      p++;
+    }
+    tetriss[i][p] = '\0';
+    i++;
+    p = 0;
+  }
+  tetriss[3] = NULL;
+  i = 0;
+  p = 0;
+   while (tetriss[i])
+  {
+    while(tetriss[i][p])
+        p++;
+    ft_putstr(tetriss[i]);
+    ft_putchar('\n');
+    p = 0;
+    i++;
+    }
+  i = 0;
+  dest_tetris = malloc(sizeof(char*) * 2);
+  while(i < 2)
+  {
+    dest_tetris[i] = malloc(sizeof(char) * 3);
+    i++;
+  }
+  initialisation(list);
+  insert_list(list, tetriss, dest_tetris);
+  affiche(list);
+  //insert_elem_end_liste(list, tetriss, dest_tetris);
+  del_list(list);
+    return (0);
 }
