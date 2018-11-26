@@ -6,7 +6,7 @@
 /*   By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/15 14:00:03 by flfinet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 11:18:23 by flfinet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 15:16:02 by flfinet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,6 +62,12 @@ int			check_nb_line(char *dest)
 	k = 0;
 	j = 0;
 	i = 0;
+	ft_putstr(dest);
+	ft_putchar('\n');
+	ft_putchar('\n');
+	ft_putchar('\n');
+	ft_putchar('\n');
+	ft_putchar('\n');
 	while (dest[i])
 	{
 		if (dest[i] == '\n' && dest[i + 1] == '\n')
@@ -75,7 +81,6 @@ int			check_nb_line(char *dest)
 	j = j - (k - 1);
 	printf("k : %f\n", k);
 	printf("j : %f\n", j);
-
 	k++;
 	printf("k : %f\n", k);
 	printf("j/k : %f\n", j/k);

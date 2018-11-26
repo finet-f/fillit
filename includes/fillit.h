@@ -1,56 +1,63 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
+/*   fillit.h                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: lnieto <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/08 18:29:59 by flfinet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 10:32:55 by flfinet     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/31 14:27:04 by lnieto       #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/22 16:50:59 by flfinet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+#ifndef		_FILLIT_H
+#define		_FILLIT_H
 
-# include "../libft/libft.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include "../libft/libft.h"
 
-typedef struct tetri
+typedef struct		tetri
 {
-  char *forme;
-  int  alpha;
-  int  width;
-  int  height;
-  int  start;
-  int  y;
+	char			*forme;
+	int				alpha;
+	int				width;
+	int				height;
+	int				start;
+	int				y;
   char **comp;
-  struct tetri *previous;
-  struct tetri *next;
-} s_tetri;
-
-typedef struct tab
+	struct tetri	*previous;
+	struct tetri	*next;
+}					s_tetri;
+typedef struct		tab
 {
-  int size;
-  int i;
-  int j;
-  char *comp;
-  int test;
-  int coord[26][2];
-} s_tab;
+	int				size;
+	int				i;
+	int				j;
+	int				test;
+	int				co[26][2];
+}					s_tab;
 
 int tetris_cat(char **av);
 int get_height(s_tetri info, int alpha);
+void set_ij(s_tab *tab, int alpha, int who);
+void tab_co_zero(s_tab *tab, int alpha);
+void tab_zero(s_tab *tab, int size);
+void set_tab(int alpha, int alphamax, s_tab *tab);
 int get_width(s_tetri info, int alpha);
 s_tetri new_piece(s_tetri info, int alpha, char *form);
 int start_finder(s_tetri info, int alpha);
 int detection(char **av, char ***form, int *alphamax);
-int square_former(int size, char **form, int alphamax);
-char **linesave(s_tetri info, s_tab tab, char **maptmp);
+char **square_former(int size, char **form, int alphamax);
+char **linesave(s_tetri *info, s_tab *tab, char **maptmp, char **form);
 char **true_test(s_tetri *info, s_tab *tab, char **maptmp);
-char **false_test(s_tetri *info, s_tab *tab, char **maptmp);
+char **false_test(s_tetri *info, s_tab *tab, char **map, char **form);
 s_tetri get_info(s_tetri info, int alpha);
-char **del_alpha(char **maptmp, int alpha, int tmpi, int tmpj);
+char **del_alpha(char **maptmp, int alpha, s_tab *tab);
 int formalloc(char **maptmp, s_tab tab, s_tetri info);
 char **map_maker(int size);
 void if_line(char **line, int **alphamax);
@@ -63,14 +70,5 @@ char **get_tetriminos(void);
 char *read_file(int fd);
 int check_char(char *dest);
 int check_nb_line(char *dest);
-//void initialisation(t_tetri *liste);
-//int insert_list(t_tetri *liste, char **tetris, char **dest_tetris);
-//int insert_elem_end_liste (t_tetri *liste, char **tetris, char **dest_tetris);
-//int supp(t_tetri *liste);
-//void affiche(t_tetri *liste);
-//void del_list(t_tetri *liste);
-int main(int ac, char **av);
-void ft_putchar_error(char c);
-void ft_putstr_error(char *str);
 
 #endif

@@ -1,0 +1,125 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   detection2.c                                     .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/11/22 13:04:58 by flfinet      #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/26 14:26:07 by flfinet     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
+#include "../includes/fillit.h"
+#include <stdio.h>
+
+char		**square_former(int size, char **form, int alphamax)
+{
+	s_tab	tab;
+	int		alpha;
+	s_tetri	info;
+	char	**maptmp;
+
+	alpha = 'A';
+	maptmp = map_maker(size);
+	set_tab(alpha, alphamax, &tab);
+	while (alpha <= alphamax)
+	{
+		tab_zero(&tab, size);
+		info.forme = form[alpha - 65];
+		info = get_info(info, alpha);
+		maptmp = linesave(&info, &tab, maptmp, form);
+		if (info.y == -1)
+			return (square_former(size + 1, form, alphamax));
+		else if (info.y == -2)
+			alpha--;
+		else
+		{
+			alpha++;
+			tab_co_zero(&tab, alpha);
+		}
+	}
+	return (maptmp);
+}
+
+void		if_line(char **line, int **alphamax)
+{
+	if (**line == '\0')
+		**alphamax = **alphamax + 1;
+	else
+		while (ft_strchr(*line, '#'))
+			*(ft_strchr(*line, '#')) = **alphamax;
+}
+
+int			minsize_finder(int alphamax)
+{
+	int		minsize;
+
+	minsize = 0;
+	while (minsize * minsize < (alphamax - 64) * 4)
+		minsize++;
+	return (minsize);
+}
+
+int			detection(char **av, char ***form, int *alphamax)
+{
+	int		fd;
+	char	*line;
+	char	**s;
+	char	*tmp;
+	int     k;
+
+	k = 0;
+	tmp = NULL;
+	s = NULL;
+	line = NULL;
+	ft_putstr("1");
+	fd = open(av[1], O_RDONLY);
+	if (!(s = malloc(sizeof(char**) * 35)))
+		return (-1);
+	while (k < 26)
+	  s[k++] = 0;
+	while (get_next_line(fd, &line) == 1)
+	{
+	ft_putstr("2");	
+	if_line(&line, &alphamax);
+		if (s[*alphamax - 65])
+		{
+	ft_putstr("3");
+			tmp = s[*alphamax - 65];
+			s[*alphamax - 65] = ft_strjoin(tmp, line);
+      			ft_strdel(&tmp);
+		}
+		else
+		  {
+	ft_putstr("4");
+			s[*alphamax - 65] = ft_strdup(line);
+	ft_putstr("5");
+		  }
+	}
+	ft_putstr("1");
+	*form = s;
+	return (0);
+}
+
+int			tetris_cat(char **av)
+{
+	int		size;
+	char	**form;
+	int		alphamax;
+	char	**map;
+	int		k;
+
+	alphamax = 'A';
+	detection(av, &form, &alphamax);
+	size = minsize_finder(alphamax);
+	map = square_former(size, form, alphamax);
+	k = 0;
+	while (map[k])
+	{
+		ft_putstr(map[k++]);
+		ft_putchar('\n');
+	}
+	return (0);
+}

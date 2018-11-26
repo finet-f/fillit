@@ -6,15 +6,11 @@
 /*   By: flfinet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/19 12:08:20 by flfinet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 11:24:11 by flfinet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 15:11:35 by flfinet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
 #include "../includes/fillit.h"
 
 char				**get_tetriminos(void)
@@ -23,25 +19,25 @@ char				**get_tetriminos(void)
 
 	if (!(str = (char**)malloc(sizeof(*str) * 19)))
 		return (NULL);
-	str[0] = ".##.##.|2x3";
-	str[1] = "#...##...#|3x2";
-	str[2] = "##...##|2x3";
-	str[3] = ".#..##..#|3x2";
-	str[4] = "##..##|2x2";
-	str[5] = ".#..###.|2x3";
-	str[6] = "#...##..#|3x2";
-	str[7] = "###..#..|2x3";
-	str[8] = ".#..##...#|3x2";
-	str[9] = "#...#...##|3x2";
-	str[10] = "###.#.|2x3";
-	str[11] = "##...#...#|3x2";
-	str[12] = "..#.###|2x3";
-	str[13] = ".#...#..##|3x2";
-	str[14] = "###...#|2x3";
-	str[15] = "##..#...#|3x2";
-	str[16] = "#...###|2x3";
-	str[17] = "#...#...#...#|4x1";
-	str[18] = "####|1x4";
+	str[0] = ".##.##.";
+	str[1] = "#...##...#";
+	str[2] = "##...##";
+	str[3] = ".#..##..#";
+	str[4] = "##..##";
+	str[5] = ".#..###.";
+	str[6] = "#...##..#";
+	str[7] = "###..#..";
+	str[8] = ".#..##...#";
+	str[9] = "#...#...##";
+	str[10] = "###.#.";
+	str[11] = "##...#...#";
+	str[12] = "..#.###";
+	str[13] = ".#...#..##";
+	str[14] = "###...#";
+	str[15] = "##..#...#";
+	str[16] = "#...###";
+	str[17] = "#...#...#...#";
+	str[18] = "####";
 	return (str);
 }
 
@@ -117,34 +113,6 @@ char				*read_file(const int fd)
 		ft_strdel(&file);
 		file = tmp;
 	}
-	free(buf);
-	return (file);
-}
-
-int					main(int argc, char **argv)
-{
-	int				fd;
-	int				i;
-	char			*dest;
-	s_tetri	tetris;
-
-	i = 0;
-	if (argc == 0)
-	  return (0);
-	dest = NULL;
-	dest = malloc (sizeof(char) * 1001);
-	if ((fd = open(argv[1], O_RDONLY)) == -1)
-		return (-1);
-	dest = read_file(fd);
-	printf("%zu\n", ft_strlen(dest));
-	ft_putstr(dest);
-	tetris.comp = get_tetriminos();
-	printf("Tetriminos valides/invalides = %d.\n"
-			, check_tetriminos(dest, tetris.comp));
-	printf("Recurence des pieces = %d.\n", check_recur(dest));
-	printf("Nombre de backN = %d.\n", check_backn(dest));
-	printf("Nombre de char/lignes = %d.\n", check_pcs(dest));
-	printf("Uniquement des '#' ou '.' = %d.\n\n", check_char(dest));
-	printf("Nombre de ligne par pieces = %d.\n", check_nb_line(dest));
-	return (0);
+	ft_putstr(buf);
+	return (buf);
 }

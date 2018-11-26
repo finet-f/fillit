@@ -6,7 +6,7 @@
 /*   By: lnieto <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/31 14:26:11 by lnieto       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/26 15:50:06 by flfinet     ###    #+. /#+    ###.fr     */
+Nombre de ligne par pieces = -1/*   Updated: 2018/11/26 14:13:39 by flfinet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,12 +17,12 @@
 
 int			main(int ac, char **av)
 {
-     	int		fd;
+    	int		fd;
   int		i;
   char	*dest;
   s_tetri	tetris;
 
-  i = 0;
+  	i = 0;
 	if (ac != 2)
 	{
 		ft_putstr("Usage : ./fillit file.\n       [exec]    [pieces]\n");
@@ -46,6 +46,7 @@ int			main(int ac, char **av)
 	  printf("Nombre de char/lignes = %d.\n", check_pcs(dest));
 	  printf("Uniquement des '#' ou '.' = %d.\n\n", check_char(dest));
 	  printf("Nombre de ligne par pieces = %d.\n", check_nb_line(dest));
-	 tetris_cat(av);
+	close(fd);
+	tetris_cat(av);
 	return (0);
 }
